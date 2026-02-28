@@ -1,0 +1,22 @@
+C:\Users\hosom\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+[36m[1mweave[0m: Logged in as Weights & Biases user: mayonaka-ratori.
+[36m[1mweave[0m: View Weave data at https://wandb.ai/mayo-ratori/cognibridge/weave
+INFO:     Will watch for changes in these directories: ['C:\\mistral AI\\cognibridge']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [19376] using WatchFiles
+C:\Users\hosom\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\requests\__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (6.0.0.post1)/charset_normalizer (3.4.4) doesn't match a supported version!
+  warnings.warn(
+[36m[1mweave[0m: Logged in as Weights & Biases user: mayonaka-ratori.
+[36m[1mweave[0m: View Weave data at https://wandb.ai/mayo-ratori/cognibridge/weave
+INFO:     Started server process [16700]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend\main.py'. Reloading...
+Loading .env from: C:\mistral AI\cognibridge\.env
+.env exists: True
+ELEVENLABS_API_KEY loaded: True
+MISTRAL_API_KEY loaded: True
+GEMINI_API_KEY loaded: True
+[REFACTOR] Complete - all modules loaded
+ 

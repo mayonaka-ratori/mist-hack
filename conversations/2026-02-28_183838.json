@@ -1,0 +1,32 @@
+[
+  {
+    "card_id": "2f96da73-c5ac-40ad-8049-95a1f1bd4f45",
+    "original": "今日は庭でトマトを取ろうと思っているんじゃよ",
+    "translated": "きょうは にわで あかい とまとを とるんだよ！",
+    "emotion": "たのしい",
+    "emoji": "🌱🍅👴",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a cheerful grandfather in a sunny garden, gently holding a ripe red tomato still on the vine. Soft pastel greens, blues, and reds, with simple shapes like a small wooden fence, fluffy clouds, and a watering can nearby. Picture book style, no text.",
+    "guide": "",
+    "timestamp": "2026-02-28T18:18:40.262501"
+  },
+  {
+    "card_id": "4957fc03-6d2b-44ee-a7bd-69e4f25de811",
+    "original": "とったカレーでおばあさんが間違えたよ 間違えた 間違えた",
+    "translated": "おばあちゃんが カレーに とまと いれすぎちゃった！ へんな あじに なっちゃったよ",
+    "emotion": "おこってる",
+    "emoji": "👵🍛😅",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a surprised grandma holding a steaming pot of curry with too many tomatoes floating on top. Soft pastel kitchen setting with a wooden table, simple shapes, no text, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T18:19:20.169285"
+  },
+  {
+    "card_id": "f5aca66e-b1e0-4087-9d48-e36c2d0ef754",
+    "original": " 取ったトマトでカレーを作ってみようと思う",
+    "translated": "とった とまとで おいしい カレー つくるよ！",
+    "emotion": "たのしい",
+    "emoji": "🍅🍛👨🍳",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a grandfather smiling while stirring a big pot of tomato curry in a cozy kitchen. Sunlight streams through the window, and fresh red tomatoes sit on the counter. Simple shapes, soft pastel colors, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T18:19:23.900550"
+  }
+]

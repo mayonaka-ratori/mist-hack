@@ -1,0 +1,42 @@
+[
+  {
+    "card_id": "7b8bd78e-5b68-4799-926c-152960abd28b",
+    "original": "今日は庭のトマトが赤くなったよ",
+    "translated": "おにわのあかいトマトができたよ！",
+    "emotion": "うれしい",
+    "emoji": "🍅🌱😊🌞🌿",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a sunny garden with a small, ripe red tomato on a green vine. A tiny pair of child's hands gently touching the tomato, surrounded by soft grass and flowers. Soft pastel colors, simple shapes, no text, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T17:23:14.648830"
+  },
+  {
+    "card_id": "380f5d53-5d84-43e9-adab-7e96b4f7c6cc",
+    "original": " 赤くなったよ",
+    "translated": "トマトがまっかになったよ！",
+    "emotion": "うれしい",
+    "emoji": "🍅✨😊🌱💖",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a cheerful grandfather holding a bright red tomato in a sunlit garden. A small child looks up in wonder, surrounded by green tomato plants and a wooden fence. Soft pastel colors, simple shapes, no text, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T17:23:17.518527"
+  },
+  {
+    "card_id": "6b6ca981-348f-49ce-8143-c4d3d9156dba",
+    "original": "孫が来たら一緒に取ろうと思うんや",
+    "translated": "まごがくるのをまって、いっしょにトマトをとろうね！",
+    "emotion": "たのしい",
+    "emoji": "🌱👶🍅🤗🌞",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a grandfather and a small child smiling while gently picking ripe red tomatoes together in a sunny garden. Soft pastel colors, simple shapes, no text, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T17:24:27.978123"
+  },
+  {
+    "card_id": "f0c65951-f63a-4549-bd5c-603083419b43",
+    "original": "ばあちゃんかな トマトでカレーを作ろうって話しとったんよ",
+    "translated": "ばあちゃんとトマトでカレーをつくるんだって！",
+    "emotion": "たのしい",
+    "emoji": "🍅👩🍳🍛✨",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a smiling grandma and grandpa in a cozy kitchen, holding fresh red tomatoes and a pot, with soft steam rising as if cooking curry. Pastel yellows, greens, and reds, simple shapes, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T17:25:04.418587"
+  }
+]

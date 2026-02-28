@@ -1,0 +1,36 @@
+[
+  {
+    "card_id": "f55829db-da30-4b4d-af31-2235cd8bc9c8",
+    "original": "おはよう",
+    "translated": "おはよう！ げんきに してる？ おじいちゃんは もう ごはん たべた？",
+    "emotion": "うれしい",
+    "emoji": "🌞 👴 🍳",
+    "scene_prompt": "\"A smiling elderly man in a light blue apron",
+    "guide": "「おじいちゃんの ごはん に なにが のってたの？」",
+    "timestamp": "2026-03-01T00:40:31.759348"
+  },
+  {
+    "card_id": "870b6ec0-c43e-478b-9b0e-986b33d6249a",
+    "original": "おはよう",
+    "translated": "おはよう！ きょうは なにを するの？ おじいちゃんは もう おさんぽに いった？",
+    "emotion": "たのしい",
+    "emoji": "🌞 👴 🚶",
+    "scene_prompt": "\"A smiling elderly man in a light blue shirt waving at the phone",
+    "guide": "「おさんぽで なにか みつけた？ おしえて！」",
+    "timestamp": "2026-03-01T00:41:17.976158"
+  },
+  {
+    "card_id": "9aeb5d18-fad0-4dde-9f08-4b334fd1ff14",
+    "original": "Good morning I want to pick tomatoes",
+    "translated": "Good morning! Let's pick red tomatoes today!",
+    "emotion": "excited",
+    "emoji": [
+      "🌞",
+      "👴",
+      "🍅"
+    ],
+    "scene_prompt": "A happy old man holding a basket, smiling at bright red tomatoes.",
+    "guide": "Which tomato looks the juiciest?",
+    "timestamp": "2026-03-01T00:41:28.063245"
+  }
+]

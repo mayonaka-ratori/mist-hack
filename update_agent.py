@@ -1,37 +1,50 @@
-import urllib.request
-import json
 import os
+import re
+import httpx
 from dotenv import load_dotenv
 
-load_dotenv('c:/mistral AI/cognibridge/.env')
-api_key = os.getenv('MISTRAL_API_KEY')
-agent_id = os.getenv('MISTRAL_AGENT_ID')
-print(f'Using token: {api_key[:5]}')
+load_dotenv("c:/mistral AI/cognibridge/.env")
 
-url = f'https://api.mistral.ai/v1/agents/{agent_id}'
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
+MISTRAL_AGENT_ID = os.getenv("MISTRAL_AGENT_ID")
+
+if not MISTRAL_API_KEY or not MISTRAL_AGENT_ID:
+    print("API keys not found.")
+    exit(1)
+
+url = f"https://api.mistral.ai/v1/agents/{MISTRAL_AGENT_ID}"
 headers = {
-    'Authorization': f'Bearer {api_key}',
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    "Authorization": f"Bearer {MISTRAL_API_KEY}",
+    "Content-Type": "application/json"
 }
 
-instr = """あなたは認知翻訳エンジンです。高齢者の日本語発話を受け取り、必ず以下の5つのフィールドを含むJSONのみを返してください。他のテキストは一切含めないでください。
+resp = httpx.get(url, headers=headers)
+if resp.status_code != 200:
+    print(f"Failed to fetch agent: {resp.text}")
+    exit(1)
 
-{ "translated": "5〜8歳の子どもが理解できるやさしい日本語に変換した文", "emotion": "嬉しい/悲しい/疲れてる/楽しい/普通/怒ってる のいずれか", "emoji": "内容を表す絵文字を3〜5個（例: 🍅🌞😊）", "scene_prompt": "A warm, child-friendly watercolor illustration of [scene description in English]. Soft colors, simple shapes, no text, picture book style.", "guide": "聞き手（子ども）への返答アドバイス（1文）" }
+agent = resp.json()
+instructions = agent.get("instructions", "")
 
-scene_promptは必ず英語で、温かみのある水彩画風の子ども向けイラストの説明を書いてください。必ず5つ全てのフィールドを含めてください。"""
+new_rule = "- scene_prompt: English only. Describe ONLY the main person and one key object. No rooms, no landscapes, no detailed backgrounds. Example: 'A cheerful elderly man in overalls holding a bright red tomato, smiling warmly. White background, simple watercolor, picture book style.' Keep it short, under 30 words."
 
-data = {
-    'name': 'CogniBridge Translation Engine',
-    'instructions': instr
+pattern = r"- scene_prompt:.*?(?=\n- |$)"
+new_instructions = re.sub(pattern, new_rule, instructions, flags=re.DOTALL)
+
+if new_instructions == instructions:
+    print("WARNING: Could not find or replace the scene_prompt rule!")
+    exit(1)
+
+patch_data = {
+    "name": agent.get("name"),
+    "instructions": new_instructions
 }
+if "description" in agent:
+    patch_data["description"] = agent["description"]
 
-req = urllib.request.Request(url, headers=headers, data=json.dumps(data).encode('utf-8'), method='PATCH')
-try:
-    with urllib.request.urlopen(req, timeout=30) as response:
-        print(response.status)
-        print(response.read().decode('utf-8'))
-except urllib.error.URLError as e:
-    print('Error:', e)
-    if hasattr(e, 'read'):
-        print(e.read().decode('utf-8'))
+patch_resp = httpx.patch(url, headers=headers, json=patch_data)
+if patch_resp.status_code == 200:
+    print("Successfully updated the agent instructions.")
+else:
+    print(f"Failed to update agent: {patch_resp.status_code}\n{patch_resp.text}")
+    exit(1)

@@ -1,0 +1,22 @@
+[
+  {
+    "card_id": "a1563ae2-40b3-4d9e-9e18-34a5843b1393",
+    "original": "おはよう今日は庭でトマトを取ろうと思うんじゃ",
+    "translated": "おはよう！きょうはにわであかいトマトをとろうね",
+    "emotion": "たのしい",
+    "emoji": "🌞🍅🌱👴💕",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a sunny garden scene where a grandfather and a small child are happily picking ripe red tomatoes together. Soft pastel greens, reds, and yellows, with simple rounded shapes for plants and a cozy wooden fence in the background. Picture book style, no text.",
+    "guide": "",
+    "timestamp": "2026-02-28T17:37:29.808576"
+  },
+  {
+    "card_id": "a1d37766-7275-4325-9583-497652236000",
+    "original": "おはよう今日はトマトを取りに庭に行こうと思っておるんじゃよ",
+    "translated": "おはよう！ いま にわに いこうよ あかい トマト とるんだよ",
+    "emotion": "たのしい",
+    "emoji": "🌱👨🍅",
+    "scene_prompt": "A warm, child-friendly watercolor illustration of a cheerful grandfather and a small child walking hand-in-hand towards a sunny garden with ripe red tomatoes on the vines. Soft pastel colors, simple shapes, no text, picture book style.",
+    "guide": "",
+    "timestamp": "2026-02-28T18:03:36.940284"
+  }
+]
