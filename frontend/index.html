@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CogniBridge — Speech Storyboard</title>
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --accent-color: #e94560;
+            --text-color: #ffffff;
+            --sub-text: #bdc3c7;
+            --placeholder-color: #2a2a4a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(26, 26, 46, 0.9);
+            z-index: 10;
+        }
+
+        /* Microphone Section (Fixed at bottom) */
+        .mic-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(26, 26, 46, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mic-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .mic-button:active {
+            transform: scale(0.95);
+        }
+
+        .mic-button svg {
+            fill: white;
+            width: 40px;
+            height: 40px;
+        }
+
+        .mic-button.recording {
+            animation: pulse-ring 1.5s infinite;
+            background-color: #ff4d4d;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 77, 77, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+            }
+        }
+
+        .recording-status {
+            margin-top: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            visibility: hidden;
+        }
+
+        .rec-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff4d4d;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        /* Storyboard Vertical Scroll Container */
+        .story-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) transparent;
+        }
+
+        .story-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .story-container::-webkit-scrollbar-thumb {
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        /* Page Card (Vertical layout) */
+        .page-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            animation: slideUp 0.4s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card Header (Emoji + Text + Emotion) */
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .emoji-display {
+            font-size: 48px;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+
+        .translated-display {
+            font-size: 26px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .emotion-display {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--sub-text);
+        }
+
+        /* Card Image Area */
+        .card-image-container {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #0f1731;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            padding-top: 60%;
+            /* Aspect ratio 5:3 */
+            background-color: var(--placeholder-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            animation: sweep 2s infinite linear;
+        }
+
+        @keyframes sweep {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        .story-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .story-image.loaded {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Card Footer (Guide) */
+        .card-footer {
+            text-align: center;
+            font-style: italic;
+            color: var(--sub-text);
+            font-size: 16px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .original-text {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>CogniBridge</h1>
+    </header>
+
+    <main id="storyContainer" class="story-container">
+        <!-- Vertical page cards will be appended here -->
+    </main>
+
+    <footer class="mic-section">
+        <button id="micBtn" class="mic-button">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                <path
+                    d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+            </svg>
+        </button>
+        <div id="recordingStatus" class="recording-status">
+            <div class="rec-dot"></div>
+            <span>録音中... (最大10秒)</span>
+        </div>
+    </footer>
+
+    <script>
+        const micBtn = document.getElementById('micBtn');
+        const recordingStatus = document.getElementById('recordingStatus');
+        const storyContainer = document.getElementById('storyContainer');
+
+        let socket;
+        let recognition = null;
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = 'ja-JP';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            recognition.onstart = () => {
+                micBtn.classList.add('recording');
+                recordingStatus.style.visibility = 'visible';
+            };
+            
+            recognition.onresult = (event) => {
+                const text = event.results[0][0].transcript;
+                console.log("Recognized text:", text);
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(JSON.stringify({ type: "text", content: text }));
+                }
+            };
+            
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error:", event.error);
+                stopRecording();
+            };
+            
+            recognition.onend = () => {
+                stopRecording();
+            };
+        }
+
+        // WebSocket initialization
+        function initWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            socket = new WebSocket(`${protocol}//${window.location.host}/ws`);
+
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log("WebSocket received:", data.type);
+
+                if (data.type === 'instant') {
+                    createPageCard(data);
+                } else if (data.type === 'image') {
+                    updateCardImage(data.card_id, data.image_base64);
+                }
+            };
+
+            socket.onclose = () => {
+                console.log("WebSocket closed. Reconnecting...");
+                setTimeout(initWebSocket, 2000);
+            };
+        }
+
+        initWebSocket();
+
+        // Template for a new page card
+        function createPageCard(data) {
+            console.log("Creating new card with ID:", data.card_id);
+
+            const card = document.createElement('div');
+            card.className = 'page-card';
+            card.id = `card-${data.card_id}`; // Crucial for later image lookup
+
+            // Header (Emoji, Translated, Emotion)
+            // Fix Bug 1: Uses actual data.emoji string instead of icon
+            const header = document.createElement('div');
+            header.className = 'card-header';
+            header.innerHTML = `
+                <div class="emoji-display">${data.emoji || '💬'}</div>
+                <div class="translated-display">${data.translated || '...'}</div>
+                <div class="emotion-display">${data.emotion || '...'}</div>
+            `;
+
+            // Original small text
+            const orig = document.createElement('div');
+            orig.className = 'original-text';
+            orig.textContent = `🗣️ "${data.original}"`;
+            header.appendChild(orig);
+
+            // Image Area (Placeholder by default)
+            const imgContainer = document.createElement('div');
+            imgContainer.className = 'card-image-container';
+
+            const placeholder = document.createElement('div');
+            placeholder.className = 'image-placeholder';
+            placeholder.id = `placeholder-${data.card_id}`;
+
+            const img = document.createElement('img');
+            img.className = 'story-image';
+            img.id = `img-${data.card_id}`;
+
+            imgContainer.appendChild(placeholder);
+            imgContainer.appendChild(img);
+
+            // Footer (Guide text)
+            const footer = document.createElement('div');
+            footer.className = 'card-footer';
+            footer.textContent = data.guide || '';
+
+            // Assemble
+            card.appendChild(header);
+            card.appendChild(imgContainer);
+            card.appendChild(footer);
+
+            // Fix Bug 2: Append sequentially to container instead of overwriting
+            storyContainer.appendChild(card);
+
+            // Auto scroll to latest card
+            scrollToBottom();
+        }
+
+        // Handle incoming image data (Fix Bug 3)
+        function updateCardImage(cardId, imageBase64) {
+            console.log("Updating image for card:", cardId);
+            const placeholder = document.getElementById(`placeholder-${cardId}`);
+            const imgEl = document.getElementById(`img-${cardId}`);
+
+            if (placeholder && imgEl) {
+                // Remove placeholder
+                placeholder.style.display = 'none';
+
+                // Set image source and trigger fade-in animation
+                imgEl.src = `data:image/png;base64,${imageBase64}`;
+
+                // Once loaded, show it
+                imgEl.onload = () => {
+                    imgEl.classList.add('loaded');
+                    scrollToBottom(); // Re-adjust scroll in case height changes
+                };
+            } else {
+                console.error("Card or image elements not found for ID:", cardId);
+            }
+        }
+
+        function scrollToBottom() {
+            storyContainer.scrollTo({
+                top: storyContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Recording logic
+        function startRecording() {
+            if (recognition) {
+                try {
+                    recognition.start();
+                } catch(e) {
+                    console.error("Recognition start error:", e);
+                }
+            } else {
+                alert("お使いのブラウザはWeb Speech APIをサポートしていません。Chrome等を使用してください。");
+            }
+        }
+
+        function stopRecording() {
+            if (recognition) {
+                recognition.stop();
+            }
+            micBtn.classList.remove('recording');
+            recordingStatus.style.visibility = 'hidden';
+        }
+
+        micBtn.addEventListener('click', () => {
+            if (micBtn.classList.contains('recording')) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+    </script>
+</body>
+
+</html>

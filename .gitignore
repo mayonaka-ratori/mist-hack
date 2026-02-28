@@ -1,0 +1,18 @@
+# Environment variables
+.env
+
+# Python caches
+__pycache__/
+*.pyc
+.venv/
+.venv2/
+env/
+venv/
+.pytest_cache/
+
+# Random scripts if not needed
+# update_agent.py
+
+# Mac / Windows system files
+.DS_Store
+Thumbs.db

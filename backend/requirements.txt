@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+websockets
+httpx
+python-dotenv
+mistralai
+google-genai
+Pillow
